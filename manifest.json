@@ -1,0 +1,21 @@
+{
+  "name": "پرۆمۆ هاوس",
+  "short_name": "PromoHouse",
+  "description": "بۆ پێداویستی چاپەمەنی",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#39c7f7",
+  "theme_color": "#39c7f7",
+  "icons": [
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/promohouse-b5298.firebasestorage.app/o/logopromo.jpg?alt=media&token=0240dfe1-0bc6-4ef3-b231-4a13edf8e83b",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/promohouse-b5298.firebasestorage.app/o/logopromo.jpg?alt=media&token=0240dfe1-0bc6-4ef3-b231-4a13edf8e83b",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="پرۆمۆ هاوس">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#39c7f7">
+    <meta name="msapplication-TileColor" content="#39c7f7">
+    
+    <title>پرۆمۆ هاوس - PromoHouse</title>
+    
+    <!-- ئایکۆنەکان -->
+    <link rel="icon" type="image/x-icon" href="https://firebasestorage.googleapis.com/v0/b/promohouse-44d4e.firebasestorage.app/o/logopromo.jpg?alt=media&token=aaf74cef-28df-43eb-b02c-277f66c2cb0d">
+    <link rel="apple-touch-icon" href="https://firebasestorage.googleapis.com/v0/b/promohouse-44d4e.firebasestorage.app/o/logopromo.jpg?alt=media&token=aaf74cef-28df-43eb-b02c-277f66c2cb0d">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CSS فایل -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- گوگل فۆنت -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen" dir="rtl">
+    <!-- Header -->
+    <div class="bg-white shadow-sm p-3 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="https://firebasestorage.googleapis.com/v0/b/promohouse-44d4e.firebasestorage.app/o/logopromo.jpg?alt=media&token=aaf74cef-28df-43eb-b02c-277f66c2cb0d" 
+                 alt="پرۆمۆ هاوس لۆگۆ" 
+                 class="logo">
+            <h1 style="color:#39c7f7;" class="text-lg font-bold">پرۆمۆ هاوس</h1>
+        </div>
+
+        <button id="adminPanelBtn"
+                class="bg-[#39c7f7] text-white px-5 py-2 rounded-full text-lg font-bold hover:bg-sky-400 transition-colors relative">
+           + <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
+        </button>
+    </div>
+ 
+    <!-- Promo House Banner -->
+    <div class="bg-gradient-to-r from-[#39c7f7] to-sky-400 py-6 text-center">
+        <div class="banner-logo mx-auto mb-3 shadow-xl">
+            <img src="https://firebasestorage.googleapis.com/v0/b/promohouse-44d4e.firebasestorage.app/o/logopromo.jpg?alt=media&token=aaf74cef-28df-43eb-b02c-277f66c2cb0d" 
+                 alt="پرۆمۆ هاوس لۆگۆ" 
+                 class="w-full h-full rounded-full">
+        </div>
+
+        <h2 class="text-white text-2xl font-bold mb-1">PromoHouse</h2>
+        <p class="text-white text-sm opacity-90">بۆ پێداویستی چاپەمەنی</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container mx-auto px-3 py-4">
+            
+            <!-- ١. بەشی کۆپی کراوەکان -->
+            <div id="copiedProductsSection" style="display: none;">
+                <h3 class="text-xl font-bold mb-3 text-gray-800 text-center">کالاکانی پەسەندکراو</h3>
+                
+                <!-- تابەکان -->
+                <div class="tabs flex mb-4 border-b">
+                    <button class="tab-btn active px-4 py-2 border-b-2 border-blue-500 font-bold" onclick="showCopiedTab('seller')">
+                        کالای فرۆشیار (پەسەندکراو)
+                    </button>
+                    <button class="tab-btn px-4 py-2" onclick="showCopiedTab('customer')">
+                        داواکاری کڕیار (پەسەندکراو)
+                    </button>
+                </div>
+                
+                <!-- لیستی کالای فرۆشیار پەسەندکراو -->
+                <div id="copiedSellerProducts" class="tab-content two-column-products mb-6">
+                    <!-- کالاکان لێرە دێن -->
+                </div>
+                
+                <!-- لیستی داواکاری پەسەندکراو -->
+                <div id="copiedCustomerRequests" class="tab-content two-column-products mb-6" style="display: none;">
+                    <!-- داواکاریەکان لێرە دێن -->
+                </div>
+            </div>
+
+            <!-- داشبۆردی بەڕێوەبەر -->
+            <div id="adminDashboard" style="display: none;">
+                <div class="bg-white rounded-xl shadow-md p-4 mb-4">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 text-center">داشبۆردی بەڕێوەبەر</h3>
+                    
+                    <div class="admin-dashboard-grid">
+                        <div class="admin-dashboard-btn" onclick="showAddProductFormFromDashboard()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                            <span class="admin-dashboard-text">زیادکردنی کالا</span>
+                        </div>
+                        
+                        <div class="admin-dashboard-btn" onclick="showAllProductsInDashboard()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <span class="admin-dashboard-text">بینینی کالاکان</span>
+                        </div>
+                        
+                        <div class="admin-dashboard-btn" onclick="showPromoManagerFromDashboard()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                            </svg>
+                            <span class="admin-dashboard-text">ڕیکلام</span>
+                        </div>
+                        
+                        <div class="admin-dashboard-btn" onclick="showSellerProductsView()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            <span class="admin-dashboard-text">کالای فرۆشیار</span>
+                            <span id="sellerProductsBadge" class="notification-badge" style="position: static; margin-top: 5px; display: none;">0</span>
+                        </div>
+                        
+                        <div class="admin-dashboard-btn" onclick="showCustomerRequestsView()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span class="admin-dashboard-text">داواکاری کڕیار</span>
+                            <span id="customerRequestsBadge" class="notification-badge" style="position: static; margin-top: 5px; display: none;">0</span>
+                        </div>
+                        
+                        <!-- دوگمەی نوێ بۆ کۆپی کراوەکان -->
+                        <div class="admin-dashboard-btn admin-dashboard-btn-copied" onclick="showCopiedProductsSection()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2H6a2 2 0 01-2-2V9a2 2 0 012-2h2z" />
+                            </svg>
+                            <span class="admin-dashboard-text">کۆپی کراوەکان</span>
+                        </div>
+                        
+                        <div class="admin-dashboard-btn" onclick="logoutAdmin()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="admin-dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            <span class="admin-dashboard-text">دەرچوون</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-3 rounded-lg mt-3">
+                        <h4 class="font-bold mb-2 text-sm">ڕاپۆرتی خێرا:</h4>
+                        <div class="text-xs space-y-1">
+                            <div class="flex justify-between">
+                                <span>کۆی کالاکان:</span>
+                                <span id="totalProducts" class="font-bold text-blue-600">0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>داواکاری نوێ:</span>
+                                <span id="newOrdersCount" class="font-bold text-red-600">0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>کالای فرۆشیار نوێ:</span>
+                                <span id="newSellerProductsCount" class="font-bold text-yellow-600">0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>داواکاری کڕیار نوێ:</span>
+                                <span id="newCustomerRequestsCount" class="font-bold text-green-600">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ئایکۆنەکانی سەرەوە -->
+            <div class="mb-4" id="servicesSection">
+                <h3 class="text-xl font-bold mb-4 text-gray-800 text-center"></h3>
+                
+                <div class="horizontal-icons">
+                    <div class="icon-row">
+                        <!-- پەیوەندی -->
+                        <div class="horizontal-icon-item" onclick="openContact()">
+                            <div class="icon-container mb-1">
+                                <img src="https://img.icons8.com/?size=100&id=9659&format=png&color=000000" alt="پەیوەندی">
+                            </div>
+                            <span class="text-xs font-medium mt-1">پەیوەندی</span>
+                        </div>
+
+                        <!-- کاتەلۆگ -->
+                        <div class="horizontal-icon-item" onclick="openCatalog()">
+                            <div class="icon-container mb-1">
+                                <img src="https://img.icons8.com/?size=100&id=hd7JprS7cF64&format=png&color=000000" alt="کەتەلۆگ">
+                            </div>
+                            <span class="text-xs font-medium mt-1">کەتەلۆگ</span>
+                        </div>
+
+                        <!-- نرخەکان -->
+                        <div class="horizontal-icon-item" onclick="openPricing()">
+                            <div class="icon-container mb-1">
+                                <img src="https://img.icons8.com/?size=100&id=2735&format=png&color=000000" alt="نرخەکان">
+                            </div>
+                            <span class="text-xs font-medium mt-1">نرخەکان</span>
+                        </div>
+
+                        <!-- لۆکەیشن-->
+                        <div class="horizontal-icon-item" onclick="openLocation()">
+                            <div class="icon-container mb-1">
+                                <img src="https://img.icons8.com/?size=100&id=SlJ5ejGWhimN&format=png&color=000000" alt="لۆکەیشن">
+                            </div>
+                            <span class="text-xs font-medium mt-1">لۆکەیشن</span>
+                        </div>
+
+                        <!-- FIB-->
+                        <div class="horizontal-icon-item" onclick="document.getElementById('fibModal').style.display='flex'">
+                            <div class="icon-container mb-1">
+                                <img src="https://img.icons8.com/?size=100&id=oNjlPNGrDJnS&format=png&color=000000" alt="FIB">
+                            </div>
+                            <span class="text-xs font-medium mt-1">FIB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بانەری ڕیکلام -->
+            <div class="mb-4">
+                <div class="promo-banner-section" id="promoBanner">
+                    <!-- دوگمەی بەڕێوەبەر -->
+                    <div class="promo-admin-actions" id="promoAdminActions" style="display: none;">
+                        <button onclick="showAddPromoForm()" class="promo-admin-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            گۆڕینی ڕیکلام
+                        </button>
+                    </div>
+                    
+                    <!-- وێنەکانی بانەر -->
+                    <div class="promo-images-container" id="promoImagesContainer">
+                        <!-- وێنەکان بە شێوەی داینامیکی زیاد دەکرێن -->
+                    </div>
+                    
+                    <!-- نیشاندەرەکانی سلایدەر -->
+                    <div class="promo-slideshow-indicators" id="promoIndicators">
+                        <!-- نیشاندەرەکان بە شێوەی داینامیکی زیاد دەکرێن -->
+                    </div>
+                    
+                    <!-- ناوەڕۆکی ڕیکلام -->
+                    <div class="promo-banner-content">
+                        <div id="promoBannerTitle" class="promo-banner-title"></div>
+                        <div id="promoBannerSubtitle" class="promo-banner-subtitle"></div>
+                        <div id="promoBannerDiscount" class="discount-badge">داشکاندن هەیە!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تابەکانی سەرەکی -->
+            <div class="main-tabs" id="mainTabs">
+                <button class="main-tab-btn active" onclick="showMainTab('all')">
+                    هەموو کالاکان
+                </button>
+                <button class="main-tab-btn" onclick="showMainTab('seller')">
+                    کالای فرۆشیار
+                </button>
+                <button class="main-tab-btn" onclick="showMainTab('customer')">
+                    داواکاری کڕیار 
+                </button>
+            </div>
+
+            <!-- کالاکان بە دوو سانیە -->
+            <div class="mb-4" id="mainProductsSection">
+                <h3 class="text-xl font-bold mb-3 text-gray-800 text-center" id="productsTitle">هەموو کالاکان</h3>
+                
+                <div class="two-column-products" id="productsContainer">
+                    <!-- کالاکان داینامیکی زیاد دەکرێن -->
+                </div>
+            </div>
+
+            <!-- فۆرمی دەستکاری کالای فرۆشیاری کۆپی کراو -->
+            <div class="request-form-container" id="editSellerProductFormSection" style="display: none;">
+                <h3 class="text-xl font-bold mb-4 text-gray-800 text-center">دەستکاری کالای فرۆشیار</h3>
+                
+                <form id="editSellerProductForm" onsubmit="updateCopiedSellerProduct(event)">
+                    <input type="hidden" id="editSellerProductId" value="">
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductName">ناوی کالا:</label>
+                        <input type="text" id="editSellerProductName" placeholder="ناوی کالا" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductPrice">نرخ (دینار):</label>
+                        <input type="number" id="editSellerProductPrice" placeholder="نرخ بە دینار" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductPriceUSD">نرخ ($):</label>
+                        <input type="number" step="0.01" id="editSellerProductPriceUSD" placeholder="نرخ بە دۆلار" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductCategory">جۆری کالا:</label>
+                        <select id="editSellerProductCategory" required>
+                            <option value="">جۆری کالا هەڵبژێرە</option>
+                            <option value="کوپ">کوپ</option>
+                            <option value="جانتا">جانتا</option>
+                            <option value="پێنووس">پێنووس</option>
+                            <option value="دەفتەر">دەفتەر</option>
+                            <option value="جل">جل</option>
+                            <option value="کڵاو">کڵاو</option>
+                            <option value="جوانکاری">جوانکاری</option>
+                            <option value="کەل و پەل">کەل و پەل</option>
+                            <option value="تەرمۆزە">تەرمۆزە</option>
+                            <option value="کرێکار">کرێکار</option>
+                            <option value="شتی تر">شتی تر</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductOriginalPrice">نرخە ڕاستەقینە (دینار):</label>
+                        <input type="number" id="editSellerProductOriginalPrice" placeholder="نرخە ڕاستەقینە">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductDiscount">ڕێژەی داشکاندن (%):</label>
+                        <input type="number" id="editSellerProductDiscount" placeholder="ڕێژەی داشکاندن" min="0" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSellerProductDescription">ڕونکردنەوەی کالا:</label>
+                        <textarea id="editSellerProductDescription" placeholder="ڕونکردنەوەی کالا..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button type="submit" class="submit-btn bg-green-600 hover:bg-green-700 flex-1">
+                            نوێکردنەوەی کالا
+                        </button>
+                        <button type="button" onclick="backToCopiedFromEdit()" class="submit-btn bg-gray-500 hover:bg-gray-600">
+                            گەڕانەوە
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- فۆرمی دەستکاری داواکاری کۆپی کراو -->
+            <div class="request-form-container" id="editCustomerRequestFormSection" style="display: none;">
+                <h3 class="text-xl font-bold mb-4 text-gray-800 text-center">دەستکاری داواکاری کڕیار</h3>
+                
+                <form id="editCustomerRequestForm" onsubmit="updateCopiedCustomerRequest(event)">
+                    <input type="hidden" id="editCustomerRequestId" value="">
+                    
+                    <div class="form-group">
+                        <label for="editCustomerName">ناوی کڕیار:</label>
+                        <input type="text" id="editCustomerName" placeholder="ناوی کڕیار" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCustomerPhone">ژمارەی مۆبایل:</label>
+                        <input type="tel" id="editCustomerPhone" placeholder="0770..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCustomerAddress">شوێنی نیشتەجێبوون:</label>
+                        <input type="text" id="editCustomerAddress" placeholder="سلێمانی، جادەی..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editRequestProduct">ناوی کالا:</label>
+                        <input type="text" id="editRequestProduct" placeholder="ناوی کالای داواکراو" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editRequestDescription">تێبینی:</label>
+                        <textarea id="editRequestDescription" placeholder="شێواز، رەنگ، جۆر..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editRequestQuantity">ژمارەی کالا:</label>
+                        <input type="number" id="editRequestQuantity" placeholder="ژمارە" min="1" value="1" required>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button type="submit" class="submit-btn bg-green-600 hover:bg-green-700 flex-1">
+                            نوێکردنەوەی داواکاری
+                        </button>
+                        <button type="button" onclick="backToCopiedFromEdit()" class="submit-btn bg-gray-500 hover:bg-gray-600">
+                            گەڕانەوە
+                        </button>
+                    </div>
+                </form>
+            </div>
+           
+            <!-- فۆرمی داواکاری -->
+            <div class="request-form-container" id="requestFormSection" style="display: none;">
+                <h3 class="text-xl font-bold mb-4 text-white text-center">داواکاری کاڵا</h3>
+                <p class="text-white mb-4 text-center">زانیاریەکانی خۆت بنووسە و داواکاری کاڵا بکە. داواکاریەکە بۆ بەڕێوەبەر دەنێردرێت.</p>
+                
+                <form id="customerRequestForm">
+                    <div class="form-group">
+                        <label for="customerName">ناوی تۆ:</label>
+                        <input type="text" id="customerName" placeholder="ناوی تۆ" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">ژمارەی مۆبایل:</label>
+                        <input type="tel" id="customerPhone" placeholder="0770" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerAddress">شوێنی نیشتەجێبوون:</label>
+                        <input type="text" id="customerAddress" placeholder="سلێمانی، جادەی..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requestProduct">ناوی کاڵا:</label>
+                        <input type="text" id="requestProduct" placeholder="ناوی کاڵای داواکراو" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requestDescription">تێبینی</label>
+                        <textarea id="requestDescription" placeholder="شێواز، رەنگ، جۆر..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requestQuantity">ژمارەی کاڵا:</label>
+                        <input type="number" id="requestQuantity" placeholder="ژمارە" min="1" value="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerProductImages">وێنەی کاڵا:</label>
+                        <div class="file-input-container">
+                            <input type="file" id="customerProductImages" accept="image/*" class="file-input" multiple>
+                            <label for="customerProductImages" class="file-input-label" id="customerFileInputLabel">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
+                                    <line x1="16" y1="5" x2="22" y2="5"></line>
+                                    <line x1="19" y1="2" x2="19" y2="8"></line>
+                                    <circle cx="9" cy="9" r="2"></circle>
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                                </svg>
+                                <span>وێنەی کاڵا هەڵبژێرە (فرە)</span>
+                            </label>
+                        </div>
+                        <div id="customerFileName" class="text-sm text-gray-500 mt-2"></div>
+                        <div id="customerImagePreviewContainer" class="image-preview-container mt-2" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;"></div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn bg-green-600 hover:bg-green-700">
+                        <span id="submitRequestText">ناردنی داواکاری</span>
+                        <div id="submitRequestSpinner" class="loading-spinner" style="display: none;"></div>
+                    </button>
+                    
+                    <button type="button"
+                    onclick="backToHomeFromRequestForm()"
+                    class="submit-btn bg-red-600 hover:bg-red-700 text-white mt-2">
+                        گەڕانەوە
+                    </button>
+                </form>
+            </div>
+
+       <!-- فۆرمی دانانی کاڵا -->
+            <div class="request-form-container" id="sellerProductFormSection" style="display: none;">
+             <h3 class="text-xl font-bold mb-4 text-white text-center">فرۆشتنی کاڵآ</h3>
+<p class="text-white mb-4 text-center">زانیاریەکانی خۆت بنووسە .</p>
+
+                
+                <form id="sellerProductForm">
+                    <div class="form-group">
+                        <label for="sellerProductName">ناوی تۆ:</label>
+                        <input type="text" id="sellerProductName" placeholder="ناوی تۆ" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerPhone">ژمارەی مۆبایل:</label>
+                        <input type="tel" id="sellerPhone" placeholder="0770" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerAddress">شوێنی نیشتەجێبوون:</label>
+                        <input type="text" id="sellerAddress" placeholder="سلێمانی، جادەی..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerProductTitle">ناوی کاڵا:</label>
+                        <input type="text" id="sellerProductTitle" placeholder="ناوی کاڵای داواکراو" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerProductDescription">شێواز/رەنگی کاڵا:</label>
+                        <textarea id="sellerProductDescription" placeholder="شێواز، رەنگ، جۆر..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerProductQuantity">ژمارەی کاڵا:</label>
+                        <input type="number" id="sellerProductQuantity" placeholder="ژمارە" min="1" value="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerProductPrice">نرخ ($):</label>
+                        <input type="number" step="0.01" id="sellerProductPrice" placeholder="نرخ بە دۆلار" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerProductImages">وێنەی کاڵا:</label>
+                        <div class="file-input-container">
+                            <input type="file" id="sellerProductImages" accept="image/*" class="file-input" multiple>
+                            <label for="sellerProductImages" class="file-input-label" id="sellerFileInputLabel">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
+                                    <line x1="16" y1="5" x2="22" y2="5"></line>
+                                    <line x1="19" y1="2" x2="19" y2="8"></line>
+                                    <circle cx="9" cy="9" r="2"></circle>
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                                </svg>
+                                <span>وێنەی کاڵا هەڵبژێرە (فرە)</span>
+                            </label>
+                        </div>
+                        <div id="sellerFileName" class="text-sm text-gray-500 mt-2"></div>
+                        <div id="sellerImagePreviewContainer" class="image-preview-container mt-2" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;"></div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn bg-green-600 hover:bg-green-700">
+                        <span id="submitSellerProductText">ناردنی داواکاری</span>
+                        <div id="submitSellerProductSpinner" class="loading-spinner" style="display: none;"></div>
+                    </button>
+                    
+                    <button type="button"
+                    onclick="backToHomeFromSellerForm()"
+                    class="submit-btn bg-red-600 hover:bg-red-700 text-white mt-2">
+                        گەڕانەوە
+                    </button>
+                </form>
+            </div>
+           
+  <!-- فۆرمی زیادکردنی کالا -->
+<div class="add-product-form" id="addProductForm" style="display: none;">
+    <h3 class="text-xl font-bold mb-4 text-gray-800 text-center" id="formTitle">زیادکردنی کالای نوێ (بەڕێوەبەر)</h3>
+    
+    <form id="productForm">
+        <input type="hidden" id="productId" value="">
+        
+        <!-- ناوی کالا -->
+        <div class="form-group">
+            <label for="productName" style="color: #000000; font-weight: 600;">ناوی کالا:</label>
+            <input type="text" id="productName" placeholder="وەک: جل، کڵاو، جانتا..." required>
+        </div>
+        
+        <!-- تەنها نرخی دۆلار -->
+        <div class="form-group">
+            <label for="productPriceUSD" style="color: #000000; font-weight: 600;">نرخ ($):</label>
+            <input type="number" step="0.01" id="productPriceUSD" placeholder="وەک: 0.04" required>
+        </div>
+
+        <!-- رەنگەکان و ژمارەکانیان -->
+        <div class="form-group">
+            <label style="color: #000000; font-weight: 600;">رەنگ و ژمارە:</label>
+            
+            <!-- بەشی هەڵبژاردنی رەنگ (هەردوو شێواز) -->
+            <div class="flex gap-2 mb-2">
+                <!-- دراپ داون بۆ رەنگە پێشبینیکراوەکان -->
+                <select id="colorDropdown" style="flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
+                    <option value="">رەنگ لە لیست هەڵبژێرە...</option>
+                    <option value="سور">سور</option>
+                    <option value="سەوز">سەوز</option>
+                    <option value="شین">شین</option>
+                    <option value="ڕەش">ڕەش</option>
+                    <option value="سپی">سپی</option>
+                    <option value="زەرد">زەرد</option>
+                    <option value="پەمەیی">پەمەیی</option>
+                    <option value="قاوەیی">قاوەیی</option>
+                </select>
+                
+                <!-- تێکستی ئازاد بۆ رەنگی تایبەت -->
+                <input type="text" id="colorCustomInput" 
+                       placeholder="یان رەنگی تایبەت بنووسە" 
+                       style="flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
+            </div>
+            
+            <!-- دەستکاری: دوگمەی زیادکردنی رەنگ -->
+            <button type="button" onclick="addColorRowNew()" 
+                    style="margin-top: 8px; background: #10b981; color: white; padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600;">
+                + زیادکردنی رەنگ بۆ لیست
+            </button>
+            
+            <!-- کۆنتیندەری رەنگ و ژمارەکان -->
+            <div id="colorQuantityContainer" style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+                <!-- رەنگ و ژمارەکان لێرە زیاد دەکرێن -->
+                <div class="color-quantity-row" style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+                    <input type="text" class="color-input" value="سور" readonly
+                           style="flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #f9fafb;">
+                    <input type="number" class="quantity-input" placeholder="ژمارە" min="0" value="1"
+                           style="width: 100px; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
+                    <button type="button" onclick="removeColorRow(this)" 
+                            style="background: #ef4444; color: white; padding: 10px; border-radius: 8px; border: none; cursor: pointer;">
+                        ×
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- جۆری کالا -->
+        <div class="form-group">
+            <label for="productCategory" style="color: #000000; font-weight: 600;">جۆری کالا:</label>
+            <select id="productCategory" required>
+                <option value="">جۆری کالا هەڵبژێرە</option>
+                <option value="کوپ">کوپ</option>
+                <option value="جانتا">جانتا</option>
+                <option value="پێنووس">پێنووس</option>
+                <option value="دەفتەر">دەفتەر</option>
+                <option value="جل">جل</option>
+                <option value="کڵاو">کڵاو</option>
+                <option value="جوانکاری">جوانکاری</option>
+                <option value="کەل و پەل">کەل و پەل</option>
+                <option value="تەرمۆزە">تەرمۆزە</option>
+                <option value="کرێکار">کرێکار</option>
+                <option value="شتی تر">شتی تر</option>
+            </select>
+        </div>
+        
+        <!-- وێنەکان -->
+        <div class="form-group">
+            <label for="productImages" style="color: #000000; font-weight: 600;">وێنەکانی کالا (فرە):</label>
+            <div class="file-input-container">
+                <input type="file" id="productImages" accept="image/*" class="file-input" multiple>
+                <label for="productImages" class="file-input-label" id="fileInputLabel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
+                        <line x1="16" y1="5" x2="22" y2="5"></line>
+                        <line x1="19" y1="2" x2="19" y2="8"></line>
+                        <circle cx="9" cy="9" r="2"></circle>
+                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                    </svg>
+                    <span>وێنەکانی کالا هەڵبژێرە (فرە)</span>
+                </label>
+            </div>
+            <div id="fileName" class="text-sm text-gray-500 mt-2"></div>
+            <div id="imagePreviewContainer" class="image-preview-container mt-2"></div>
+            <div id="currentImages" class="mt-2" style="display: none;">
+                <p class="text-xs text-gray-500 mb-2">وێنەکانی ئێستا:</p>
+                <div id="currentImagesPreview" class="image-preview-container"></div>
+            </div>
+        </div>
+        
+        <!-- دوگمەکان -->
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="submit-btn" id="submitBtn" style="flex: 1;">
+                <span id="submitText">زیادکردنی کالا</span>
+                <div id="submitSpinner" class="loading-spinner" style="display: none;"></div>
+            </button>
+            
+            <button type="button" id="cancelEditBtn" class="submit-btn bg-gray-500 hover:bg-gray-600" style="display: none; flex: 1;">
+                هەڵوەشاندنەوە
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+// فەنکشنەکانی زیادکردن و سڕینەوەی رەنگ - وەشانتی نوێ
+
+// فەنکشنی نوێ بۆ زیادکردنی رەنگ بە هەردوو شێواز
+function addColorRowNew() {
+    const container = document.getElementById('colorQuantityContainer');
+    const colorDropdown = document.getElementById('colorDropdown');
+    const customInput = document.getElementById('colorCustomInput');
+    
+    // وەرگرتنی رەنگی هەڵبژێردراو یان نووسراو
+    let selectedColor = '';
+    
+    if (customInput.value.trim() !== '') {
+        // ئەگەر رەنگ بە شێوازی تێکست نووسرابێت
+        selectedColor = customInput.value.trim();
+        customInput.value = ''; // پاککردنەوەی خانەکە
+    } else if (colorDropdown.value !== '') {
+        // ئەگەر رەنگ لە دراپ داون هەڵبژێردرابێت
+        selectedColor = colorDropdown.value;
+        colorDropdown.value = ''; // پاککردنەوەی هەڵبژاردن
+    } else {
+        alert("تکایە رەنگێک هەڵبژێرە یان بنووسە!");
+        return;
+    }
+    
+    // دروستکردنی ڕیزێکی نوێ
+    const newRow = document.createElement('div');
+    newRow.className = 'color-quantity-row';
+    newRow.style.cssText = 'display: flex; gap: 8px; align-items: center; margin-bottom: 8px;';
+    newRow.innerHTML = `
+        <input type="text" class="color-input" value="${selectedColor}" readonly
+               style="flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #f9fafb;">
+        <input type="number" class="quantity-input" placeholder="ژمارە" min="0" value="1"
+               style="width: 100px; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px;">
+        <button type="button" onclick="removeColorRow(this)" 
+                style="background: #ef4444; color: white; padding: 10px; border-radius: 8px; border: none; cursor: pointer;">
+            ×
+        </button>
+    `;
+    container.appendChild(newRow);
+}
+
+// فەنکشنی سڕینەوەی رەنگ
+function removeColorRow(button) {
+    const container = document.getElementById('colorQuantityContainer');
+    if (container.children.length > 1) {
+        button.parentElement.remove();
+    } else {
+        alert('لانیکەم یەک رەنگ پێویستە!');
+    }
+}
+
+// کۆکردنەوەی رەنگەکان و ژمارەکان - وەشانتی نوێ
+function getColorQuantityData() {
+    const rows = document.querySelectorAll('.color-quantity-row');
+    const colorQuantity = {};
+    
+    rows.forEach(row => {
+        const colorElement = row.querySelector('.color-input');
+        const color = colorElement ? colorElement.value.trim() : '';
+        const quantityElement = row.querySelector('.quantity-input');
+        const quantity = quantityElement ? quantityElement.value : '';
+        
+        if (color && quantity && !isNaN(parseInt(quantity))) {
+            // چاککردنی ناوی رەنگ (بچووککردنی هێما جیاوازەکان)
+            const cleanedColor = color.trim().replace(/\s+/g, ' ');
+            
+            // کۆکردنەوەی رەنگە هاوشێوەکان
+            const existingKey = Object.keys(colorQuantity).find(key => 
+                key.toLowerCase() === cleanedColor.toLowerCase()
+            );
+            
+            if (existingKey) {
+                colorQuantity[existingKey] += parseInt(quantity);
+            } else {
+                colorQuantity[cleanedColor] = parseInt(quantity);
+            }
+        }
+    });
+    
+    return colorQuantity;
+}
+</script>
+
+
+
+            <!-- فۆرمی زیادکردنی ڕیکلام -->
+            <div class="add-promo-form" id="addPromoForm" style="display: none;">
+                <h3 class="text-xl font-bold mb-4 text-gray-800 text-center">ڕێکخستنی بانەری ڕیکلام</h3>
+                
+                <form id="promoForm">
+                    <div class="form-group">
+                        <label for="promoTitle">سەردێڕی ڕیکلام:</label>
+                        <input type="text" id="promoTitle" placeholder="وەک: ڕێگایەکی سەرنج ڕاکێش بۆ کڕین!" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="promoSubtitle">سەردێڕی بچووک:</label>
+                        <input type="text" id="promoSubtitle" placeholder="پرۆمۆ هاوس" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="promoDiscountText">داشکاندن (دەق):</label>
+                        <input type="text" id="promoDiscountText" placeholder="وەک: داشکاندن هەیە! یان %٢٠ داشکاندن" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="promoImage">وێنەی ڕیکلام (فرە وێنە):</label>
+                            <div class="file-input-container">
+                                <input type="file" id="promoImage" accept="image/*" class="file-input" multiple>
+                                <label for="promoImage" class="file-input-label" id="promoFileInputLabel">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
+                                        <line x1="16" y1="5" x2="22" y2="5"></line>
+                                        <line x1="19" y1="2" x2="19" y2="8"></line>
+                                        <circle cx="9" cy="9" r="2"></circle>
+                                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                                    </svg>
+                                    <span>وێنەی ڕیکلام هەڵبژێرە (فرە)</span>
+                                </label>
+                            </div>
+                        <div id="promoFileName" class="text-sm text-gray-500 mt-2"></div>
+                        <div id="promoImagesPreviewContainer" class="mt-3" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="promoTextColor">ڕەنگی دەق:</label>
+                        <input type="color" id="promoTextColor" value="#ffffff" class="w-full h-12">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitPromoBtn">
+                        <span id="submitPromoText">نوێکردنەوەی ڕیکلام</span>
+                        <div id="submitPromoSpinner" class="loading-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- بەشی بینینی هەموو کالاکان -->
+            <div id="allProductsSection" style="display: none;">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">هەموو کالاکان</h3>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>وێنە</th>
+                                <th>ناوی کالا</th>
+                                <th>جۆر</th>
+                                <th>نرخ (دینار)</th>
+                                <th>نرخ ($)</th>
+                                <th>کردارەکان</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allProductsTable">
+                            <!-- کالاکان داینامیکی زیاد دەکرێن -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-container">
+            <!-- مال -->
+            <div class="bottom-nav-item active" id="bottomHomeBtn" onclick="showHomePage()">
+                <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="bottom-nav-text">ماڵ</span>
+            </div>
+   
+            <!-- کاڵاکان -->
+            <div class="bottom-nav-item" id="bottomOrdersBtn" onclick="showOrdersPage()">
+                <img
+                    src="https://img.icons8.com/?size=100&id=117466&format=png&color=39C7F7"
+                    alt="کاڵاکان"
+                    class="bottom-nav-icon"
+                >
+                <span class="bottom-nav-text">کاڵاکان</span>
+            </div>
+
+            <!-- داواکاری -->
+            <div class="bottom-nav-item" id="bottomRequestBtn" onclick="showRequestPage()">
+                <img
+                    src="https://img.icons8.com/?size=100&id=K3CUwZKgHxKe&format=png&color=39C7F7"
+                    alt="داواکاری"
+                    class="bottom-nav-icon"
+                >
+                <span class="bottom-nav-text">داواکاری</span>
+            </div>
+            
+            <!-- فرۆشتن -->
+            <div class="bottom-nav-item" id="bottomAddProductBtn" onclick="showSellerProductPage()">
+                <img 
+                    src="https://img.icons8.com/?size=100&id=18898&format=png&color=39C7F7"
+                    alt="فرۆشتن"
+                    class="bottom-nav-icon"
+                >
+                <span class="bottom-nav-text">فرۆشتن</span>
+            </div>
+            
+            <!-- دەربارە -->
+            <div class="bottom-nav-item" id="bottomAboutBtn" onclick="showAboutPage()">
+                <img
+                    src="https://img.icons8.com/?size=100&id=dbA3cqtoMIhB&format=png&color=39C7F7"
+                    alt="دەربارە"
+                    class="bottom-nav-icon"
+                >
+                <span class="bottom-nav-text">دەربارە</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- مۆدالەکان -->
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">چوونە ژوورەوەی بەڕێوەبەر</h3>
+            
+            <div class="form-group">
+                <label for="adminEmail">ئیمەیڵ:</label>
+                <input type="email" 
+                       id="adminEmail" 
+                       class="w-full p-2 border rounded">
+            </div>
+            
+            <div class="form-group mt-3">
+                <label for="adminPassword">وشەی نهێنی:</label>
+                <input type="password" 
+                       id="adminPassword" 
+                       class="w-full p-2 border rounded">
+            </div>
+            
+            <div class="action-buttons mt-4">
+                <button id="loginBtn"
+                        class="action-button bg-[#39C7F7] hover:bg-[#2fb8e6] text-white w-full mb-2">
+                    چوونە ژوورەوە
+                </button>
+
+                <button id="cancelLoginBtn"
+                        class="action-button bg-red-500 hover:bg-red-600 text-white w-full">
+                    هەڵوەشاندنەوە
+                </button>
+            </div>
+            
+            <p class="text-gray-500 text-sm mt-4 text-center">تەنها بەڕێوەبەر دەتوانێت بچێتە ژوورەوە</p>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="productDetailsModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">زانیاریەکانی کاڵا</h3>
+            
+            <div id="productDetailsContent" class="space-y-4">
+                <!-- زانیاری کاڵا لێرە پڕ دەکرێتەوە -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Phone Modal -->
+    <div id="phoneModal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">پەیوەندی</h3>
+            <p class="text-gray-600 mb-2">ژمارەی مۆبایل:</p>
+            
+            <a href="tel:+9647701922060" class="phone-number" id="phoneNumber" style="text-decoration: none; color: inherit; display: block; margin-bottom: 10px;">
+                964 770 192 2060
+            </a>
+
+            <p class="text-gray-500 text-sm mb-4">ئەم ژمارەیە دەتوانیت ئێستا پەیوەندی بکەیت</p>
+            
+            <div class="action-buttons">
+                <a href="tel:+9647701922060" style="text-decoration: none; flex: 1;">
+                    <button id="messageBtn" class="action-button message-btn" style="width: 100%;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; margin-right: 8px;">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        پەیوەندی
+                    </button>
+                </a>
+
+                <a href="https://wa.me/9647701922060" target="_blank" style="text-decoration: none; flex: 1;">
+                    <button id="whatsappBtn" class="action-button whatsapp-btn" style="width: 100%;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; margin-right: 8px;">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.76.982.998-3.675-.236-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.9 6.994c-.004 5.45-4.438 9.88-9.888 9.88m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.333 .157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.333 11.893-11.893 0-3.18-1.24-6.162-3.495-8.411"/>
+                        </svg>
+                        واتساپ
+                    </button>
+                </a>
+            </div>
+            
+            <button id="closeModalBtn" class="close-btn action-button">داخستن</button>
+        </div>
+    </div>
+
+    <!-- FIB Payment Modal -->
+    <div id="fibModal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">پارە ناردن بە بارکۆد</h3>
+            <p class="text-gray-600 mb-2">بارکۆدی QR بۆ پارە ناردن:</p>
+            <div class="qrcode-container">
+                <img src="https://i.ibb.co/ZzysZ1px/fib-barcode-promo.png" 
+                     alt="QR Code" 
+                     class="qrcode-img">
+            </div>
+            
+            <button id="copyAccountBtn" class="copy-btn">لەبەرکردنی ژمارەی حساب</button>
+            <button id="closeFibModalBtn" class="close-btn action-button mt-2">داخستن</button>
+        </div>
+    </div>
+
+    <div id="aboutPage" class="modal" dir="rtl">
+        <div class="modal-content flex flex-col" style="max-width:500px; max-height:85vh; text-align: right;">
+            <h3 class="text-xl font-bold text-gray-800 text-center mb-4">
+                دەربارەی پرۆمۆ هاوس
+            </h3>
+
+            <div class="flex justify-center mb-4">
+                <img
+    src="https://firebasestorage.googleapis.com/v0/b/promohouse-44d4e.firebasestorage.app/o/logopromo.jpg?alt=media&token=aaf74cef-28df-43eb-b02c-277f66c2cb0d"
+    alt="Promo House Logo"
+    class="w-24 h-24 rounded-full border-4"
+    style="border-color: #39C7F7;">
+            </div>
+
+            <div class="flex-1 overflow-y-auto bg-blue-50 p-4 rounded-lg space-y-4 text-right">
+                <p class="text-gray-600 leading-relaxed text-justify">
+                    بە هۆی تێگەیشتنی قوڵمان لە بازاڕی ناوخۆی و پێویستیەکانی کڕیاران،
+                    ئێستا خاوەنی کۆگایەکی ئامادەکراوی پڕ لە ئەشیای جۆراو جۆرین لە سلێمانی،
+                    کە ئەتوانین پێداویستی کواڵیتی بەرز بە نرخی گونجاو دابین بکەین بۆ
+                    چاپخانەکان لە هەموو ناوچەکانی هەرێمی کوردستان.
+                </p>
+
+                <hr class="border-blue-100">
+
+                <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mt-1 shrink-0" fill="#39C7F7" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.15a1 1 0 01.99.84l.74 4.43a1 1 0 01-.54 1.06l-1.55.77a11 11 0 006.11 6.11l.77-1.55a1 1 0 011.06-.54l4.43.74a1 1 0 01.84.99V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    <div>
+                        <p class="font-semibold text-gray-700">ژمارەی تەلەفۆن</p>
+                        <p dir="ltr" class="text-gray-600 text-right">0770 192 2060</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mt-1 shrink-0" fill="#39C7F7" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.15a1 1 0 01.99.84l.74 4.43a1 1 0 01-.54 1.06l-1.55.77a11 11 0 006.11 6.11l.77-1.55a1 1 0 011.06-.54l4.43.74a1 1 0 01.84.99V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    <div>
+                        <p class="font-semibold text-gray-700">ژمارەی مەخزەن</p>
+                        <p dir="ltr" class="text-gray-600 text-right">0771 785 8787</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mt-1 shrink-0" fill="#39C7F7" viewBox="0 0 20 20">
+                        <path d="M2 5.88L10 9.88l8-4A2 2 0 0016 4H4a2 2 0 00-2 1.88z"/>
+                        <path d="M18 8.12l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.12z"/>
+                    </svg>
+                    <div>
+                     <p class="font-semibold text-gray-700">ئیمەیڵ</p>
+<p dir="ltr" class="text-gray-600 text-right">
+    <a href="/cdn-cgi/l/email-protection#80e9eee6efc0f0f2efedefe8eff5f3e5e9f2e1f1aee3efed">
+        <span class="__cf_email__" data-cfemail="4920272f2609393b26242621263c3a2c203b2838672a2624">[email&#160;protected]</span>
+    </a>
+</p>
+
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mt-1 shrink-0" fill="#39C7F7" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                    </svg>
+                 <div style="font-family: 'Noto Sans Arabic', sans-serif;">
+    <p class="font-semibold text-gray-700">ناونیشان</p>
+    <p class="text-gray-600">سلێمانی - جادەی مزگەوتی رحمان</p>
+    <p class="text-sm text-gray-500">خوار سوپەرمارکیتی Shock</p>
+</div>
+                </div>
+            </div>
+
+            <button id="closeAboutBtn" class="close-btn action-button w-full mt-3">گەڕانەوە</button>
+        </div>
+    </div>
+   
+    <!-- Orders Page -->
+    <div id="ordersPage" class="modal">
+        <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto; position: relative;">
+            <!-- دوگمەی X بۆ داخستن -->
+            <button onclick="closeOrdersModal()" class="absolute top-3 right-3 bg-white hover:bg-gray-100 text-gray-600 hover:text-red-600 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-10" style="border: 2px solid #e5e7eb;">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">جۆری کاڵاکان</h3>
+            
+            <div class="menu-categories-grid" id="menuCategoriesGrid">
+                <!-- ١٢ کاتیگۆری -->
+                <div class="menu-category-item" onclick="showCategoryInModal('کوپ')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=HfeqOA6sdWjN&format=png&color=39C7F7" alt="کوپ">
+                    </div>
+                    <span class="menu-category-text">کوپ</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('جانتا')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=12581&format=png&color=39C7F7" alt="جانتا">
+                    </div>
+                    <span class="menu-category-text">جانتا</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('پێنووس')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=15069&format=png&color=39C7F7" alt="پێنووس">
+                    </div>
+                    <span class="menu-category-text">پێنووس</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('دەفتەر')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=qP5AlP8gx47M&format=png&color=39C7F7" alt="دەفتەر">
+                    </div>
+                    <span class="menu-category-text">دەفتەر</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('جل')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=bTodYNYIBCJT&format=png&color=39C7F7" alt="جل">
+                    </div>
+                    <span class="menu-category-text">جل</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('کڵاو')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=115547&format=png&color=39C7F7" alt="کڵاو">
+                    </div>
+                    <span class="menu-category-text">کڵاو</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('جوانکاری')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=12461&format=png&color=39C7F7" alt="جوانکاری">
+                    </div>
+                    <span class="menu-category-text">جوانکاری</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('کەل و پەل')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=Zrv_v_hNmHHG&format=png&color=39C7F7" alt="کەل و پەل">
+                    </div>
+                    <span class="menu-category-text">کەل و پەل</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('تەرمۆزە')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=9855&format=png&color=39C7F7" alt="تەرمۆزە">
+                    </div>
+                    <span class="menu-category-text">تەرمۆزە</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('کرێکار')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=lof1duuhDIcB&format=png&color=39C7F7" alt="کرێکار">
+                    </div>
+                    <span class="menu-category-text">کرێکار</span>
+                </div>
+                
+                <div class="menu-category-item" onclick="showCategoryInModal('شتی تر')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=33951&format=png&color=39C7F7" alt="شتی تر">
+                    </div>
+                    <span class="menu-category-text">شتی تر</span>
+                </div>
+                
+                <div class="menu-category-item active" onclick="showCategoryInModal('هەمووکاڵاکان')">
+                    <div class="menu-category-icon">
+                        <img src="https://img.icons8.com/?size=100&id=K68Uwf3UO0ab&format=png&color=39C7F7" alt="هەموو کاڵاکان">
+                    </div>
+                    <span class="menu-category-text">هەموو کالاکان</span>
+                </div>
+            </div>
+            
+            <!-- کالاکانی کاتیگۆرییەکە -->
+            <div id="menuProductsContainer" style="display: none;">
+                <h4 class="font-bold mb-3 text-gray-700" id="menuProductsTitle">کالاکانی <span id="menuCategoryName"></span></h4>
+                <div class="two-column-products mb-6" id="menuProductsList">
+                    <!-- کالاکان داینامیکی زیاد دەکرێن -->
+                </div>
+                <button onclick="backToMenuCategories()" class="submit-btn bg-[#39C7F7] hover:bg-[#2FB6E6] w-full flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    گەڕانەوە بۆ کاتیگۆرییەکان
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مۆدالی زۆم کردنی وێنەی کالا -->
+    <div id="imageZoomModal" class="image-zoom-modal">
+        <button class="close-zoom-btn" onclick="closeImageZoom()">×</button>
+        <button class="zoom-nav-btn zoom-prev-btn" onclick="changeZoomImage(-1)">‹</button>
+        <button class="zoom-nav-btn zoom-next-btn" onclick="changeZoomImage(1)">›</button>
+        
+        <div class="zoom-image-container">
+            <img id="zoomedImage" src="" alt="وێنەی زۆمکراو" class="zoom-image">
+            <div class="zoom-image-counter" id="zoomImageCounter">1/1</div>
+        </div>
+    </div>
+
+    <!-- مۆدالی سادە بۆ زۆم کردنی وێنە -->
+    <div id="imageModal" class="hidden fixed inset-0 z-[100] bg-black bg-opacity-90 flex items-center justify-center p-4" onclick="closeImageModal()">
+        <button class="absolute top-5 right-5 text-white text-4xl">&times;</button>
+        <img id="modalImage" class="max-w-full max-h-full rounded-lg shadow-2xl transition-transform duration-300" src="" alt="Zoomed view">
+    </div>
+
+<div id="sellerProductsView" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">کالای فرۆشیار</h3>
+            
+            <div class="tabs flex mb-4 border-b">
+                <button class="tab-btn active px-4 py-2 border-b-2 border-blue-500 font-bold" onclick="showSellerProductsTab('pending')">
+                    چاوەڕوانی پەسەند (0)
+                </button>
+                <button class="tab-btn px-4 py-2" onclick="showSellerProductsTab('approved')">
+                    پەسەندکراو (0)
+                </button>
+                <button class="tab-btn px-4 py-2" onclick="showSellerProductsTab('rejected')">
+                    ڕەتکراوەکان (0)
+                </button>
+            </div>
+            
+            <div id="sellerPendingList" class="tab-content two-column-products mb-6"></div>
+            <div id="sellerApprovedList" class="tab-content two-column-products mb-6" style="display: none;"></div>
+            <div id="sellerRejectedList" class="tab-content two-column-products mb-6" style="display: none;"></div>
+            
+            <button onclick="closeSellerProductsView()" class="close-btn action-button w-full mt-4">گەڕانەوە</button>
+        </div>
+    </div>
+
+    <div id="customerRequestsView" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">داواکاری کڕیار</h3>
+            
+            <div class="tabs flex mb-4 border-b">
+                <button class="tab-btn active px-4 py-2 border-b-2 border-blue-500 font-bold" onclick="showCustomerRequestsTab('pending')">
+                    چاوەڕوانی پەسەند (0)
+                </button>
+                <button class="tab-btn px-4 py-2" onclick="showCustomerRequestsTab('approved')">
+                    پەسەندکراو (0)
+                </button>
+                <button class="tab-btn px-4 py-2" onclick="showCustomerRequestsTab('rejected')">
+                    ڕەتکراوەکان (0)
+                </button>
+            </div>
+            
+            <div id="customerPendingList" class="tab-content two-column-products mb-6"></div>
+            <div id="customerApprovedList" class="tab-content two-column-products mb-6" style="display: none;"></div>
+            <div id="customerRejectedList" class="tab-content two-column-products mb-6" style="display: none;"></div>
+            
+            <button onclick="closeCustomerRequestsView()" class="close-btn action-button w-full mt-4">گەڕانەوە</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script data-cfasync="false
+
+     <!-- Firebase SDK -->
+    <script data-cfasync="false" type="module" src="firebase-config.js"></script>
+    
+    <!-- JavaScript فایل -->
+    <script src="script.js"></script>
+</body>
+</html>
